@@ -30,3 +30,21 @@ swift run
 - **Save** – Use the *Save* button to export the modified PDF to a new file (the original stays untouched unless you overwrite it explicitly).
 
 All annotations are stored inside the PDF, so any standards-compliant viewer (Preview, Acrobat, etc.) will display them.
+
+## Packaging an App Bundle
+
+Run the packaging helper to build a Release binary and wrap it in a self-contained `.app` bundle. The script converts the root-level `PdfEditorIcon.png` into the `.icns` format using the macOS `sips` and `iconutil` tools, so keep that file handy (or replace it with your own artwork before running the script):
+
+```bash
+bash scripts/package.sh
+```
+
+The finished bundle is written to `dist/PDF Editor.app`; double-click it (or run `open dist/PDF\ Editor.app`) to launch like any other macOS application. Customize the `Info.plist` inside `scripts/package.sh` if you need a different bundle identifier, version, or metadata.
+
+To install the packaged app into `/Applications`, run:
+
+```bash
+bash scripts/install.sh
+```
+
+Use `bash scripts/install.sh --force` to overwrite an existing install. The script invokes the packager automatically if the bundle is missing and then deploys the resulting app bundle (including the generated icon) into `/Applications`.
