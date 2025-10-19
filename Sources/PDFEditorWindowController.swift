@@ -8,6 +8,7 @@ final class PDFEditorWindowController: NSWindowController {
         static let addImage = NSToolbarItem.Identifier("com.codex.pdfeditor.toolbar.addImage")
         static let decreaseFont = NSToolbarItem.Identifier("com.codex.pdfeditor.toolbar.decreaseFont")
         static let increaseFont = NSToolbarItem.Identifier("com.codex.pdfeditor.toolbar.increaseFont")
+        static let print = NSToolbarItem.Identifier("com.codex.pdfeditor.toolbar.print")
         static let save = NSToolbarItem.Identifier("com.codex.pdfeditor.toolbar.save")
         static let flexible = NSToolbarItem.Identifier.flexibleSpace
     }
@@ -177,6 +178,22 @@ final class PDFEditorWindowController: NSWindowController {
         }
     }
 
+    @objc
+    private func printDocument(_ sender: Any?) {
+        guard pdfView.document != nil else {
+            presentErrorAlert(message: "Open a PDF before printing.")
+            return
+        }
+
+        let printInfo = NSPrintInfo.shared
+        printInfo.horizontalPagination = .automatic
+        printInfo.verticalPagination = .automatic
+        printInfo.isHorizontallyCentered = true
+        printInfo.isVerticallyCentered = true
+
+        pdfView.print(with: printInfo, autoRotate: true)
+    }
+
     private func presentErrorAlert(message: String) {
         guard let window else { return }
         let alert = NSAlert()
@@ -213,6 +230,7 @@ extension PDFEditorWindowController: NSToolbarDelegate {
             ToolbarItemIdentifier.addImage,
             ToolbarItemIdentifier.decreaseFont,
             ToolbarItemIdentifier.increaseFont,
+            ToolbarItemIdentifier.print,
             ToolbarItemIdentifier.save,
             ToolbarItemIdentifier.flexible
         ]
@@ -225,6 +243,7 @@ extension PDFEditorWindowController: NSToolbarDelegate {
             ToolbarItemIdentifier.addImage,
             ToolbarItemIdentifier.decreaseFont,
             ToolbarItemIdentifier.increaseFont,
+            ToolbarItemIdentifier.print,
             ToolbarItemIdentifier.flexible,
             ToolbarItemIdentifier.save
         ]
@@ -269,6 +288,13 @@ extension PDFEditorWindowController: NSToolbarDelegate {
             item.image = NSImage(systemSymbolName: "textformat.size.larger", accessibilityDescription: nil)
             item.target = self
             item.action = #selector(increaseSelectedTextFont(_:))
+        case ToolbarItemIdentifier.print:
+            item.label = "Print"
+            item.paletteLabel = "Print PDF"
+            item.toolTip = "Print the current PDF"
+            item.image = NSImage(systemSymbolName: "printer", accessibilityDescription: nil)
+            item.target = self
+            item.action = #selector(printDocument(_:))
         case ToolbarItemIdentifier.save:
             item.label = "Save"
             item.paletteLabel = "Save PDF"

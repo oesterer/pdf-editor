@@ -26,6 +26,7 @@ swift run
 - **Resize** – Drag any of the corner handles to change an annotation’s size. Both text and image overlays support resizing.
 - **Edit Text** – Double-click a text annotation to edit its contents inline. Press `Esc` to cancel or click elsewhere to commit the changes.
 - **Font Size** – With a text annotation selected (or while editing), use the *A−*/*A+* toolbar buttons to shrink or grow its type.
+- **Print** – Hit *Print* in the toolbar to bring up the system print dialog for the current PDF.
 - **Save** – Use the *Save* button to export the modified PDF to a new file (the original stays untouched unless you overwrite it explicitly).
 
 All annotations are stored inside the PDF, so any standards-compliant viewer (Preview, Acrobat, etc.) will display them.
