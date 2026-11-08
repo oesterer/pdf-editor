@@ -2,6 +2,14 @@
 
 A lightweight macOS PDF editor built with AppKit and PDFKit. Open any PDF, overlay text or images, and save the annotated document back to disk.
 
+## Browser version
+
+Open the root-level `index.html` in a modern browser. No build step or backend is required. The app loads pinned PDF.js and pdf-lib libraries from CDNs, so internet access is needed to load those dependencies; documents are processed locally and are never uploaded.
+
+Open or drop a PDF, add text or PNG/JPEG images, and click a page to place them. Drag overlays to move them, use the bottom-right handle to resize, and double-click text to edit it. Select an overlay and use Delete to remove it. Save PDF downloads a new copy. Print opens a generated PDF in a new tab; use the viewer’s print command.
+
+Exports include the original PDF and overlay data in a compressed custom PDF stream so reopening in this app preserves editable overlays. Other PDF viewers display the finished edits as page content. This increases file size and retains the original content: this tool is not a redaction tool. Existing annotations from other applications are displayed but cannot be edited. Text export uses Helvetica and its standard character set; unsupported characters produce an export error. Password-protected PDFs are not supported.
+
 ## Requirements
 
 - macOS 13 or newer
